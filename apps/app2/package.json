@@ -1,0 +1,21 @@
+{
+  "name": "app2",
+  "version": "1.0.0",
+  "description": "Single-SPA Vue 3 App 2",
+  "type": "module",
+  "scripts": {
+    "start": "vite --port 9002",
+    "build": "vite build",
+    "preview": "vite preview --port 9002"
+  },
+  "dependencies": {
+    "vue": "^3.3.4",
+    "single-spa-vue": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@vitejs/plugin-vue": "^5.0.0",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.0"
+  }
+}
