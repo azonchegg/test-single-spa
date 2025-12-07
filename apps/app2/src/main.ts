@@ -11,7 +11,7 @@ const vueLifecycles = singleSpaVue({
     },
   },
   handleInstance: (app) => {
-  },
+  }
 });
 
 const lifecycles = {
@@ -20,10 +20,12 @@ const lifecycles = {
   unmount: vueLifecycles.unmount,
 };
 
-export default lifecycles;
-export const { bootstrap, mount, unmount } = lifecycles;
-
+// For IIFE builds, assign to window BEFORE export
 if (typeof window !== 'undefined') {
   (window as any).app2 = lifecycles;
+  console.log('app2 assigned to window:', lifecycles);
 }
+
+// Export default only for IIFE compatibility
+export default lifecycles;
 

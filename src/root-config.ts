@@ -59,8 +59,11 @@ function loadScript(url: string): Promise<void> {
 function getAppFromWindow(appName: string) {
   const app = (window as any)[appName];
   if (!app) {
+    console.error(`App ${appName} not found on window object. Available keys:`, Object.keys(window));
     throw new Error(`${appName} not found on window object`);
   }
+
+  console.log(`Found ${appName} on window:`, app);
 
   if (app.default && typeof app.default.bootstrap === 'function') {
     return app.default;
@@ -69,6 +72,8 @@ function getAppFromWindow(appName: string) {
   if (typeof app.bootstrap === 'function') {
     return app;
   }
+  
+  console.error(`App ${appName} does not have valid lifecycle functions. Available methods:`, Object.keys(app));
   throw new Error(`${appName} does not export valid lifecycle functions`);
 }
 
@@ -94,9 +99,16 @@ registerApplication({
   name: 'app2',
   app: async () => {
     if (import.meta.env.DEV) {
-      return await dynamicImport('http://localhost:9002/src/main.ts');
+      // Use built file from app2's dist folder via app2's dev server
+      console.log('Loading app2 script...');
+      await loadScript('http://localhost:9002/dist/app2.iife.js');
+      console.log('Script loaded, checking window.app2...');
+      // Wait a bit for IIFE to execute
+      await new Promise(resolve => setTimeout(resolve, 100));
+      return getAppFromWindow('app2');
     } else {
-      await loadScript('http://localhost:9002/dist/app2.js');
+      await loadScript('http://localhost:9002/app2.iife.js');
+      await new Promise(resolve => setTimeout(resolve, 100));
       return getAppFromWindow('app2');
     }
   },

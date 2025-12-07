@@ -1,8 +1,12 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
 
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    vue()
+  ],
   build: {
     lib: {
       entry: './src/main.ts',
@@ -13,7 +17,11 @@ export default defineConfig({
     rollupOptions: {
       output: {
         inlineDynamicImports: true,
+        // Use default export only
+        exports: 'default',
       },
+      // Don't externalize Vue and single-spa-vue - include them in the bundle
+      external: [],
     },
   },
   server: {
