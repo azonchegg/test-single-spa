@@ -99,17 +99,22 @@ registerApplication({
   name: 'app2',
   app: async () => {
     if (import.meta.env.DEV) {
-      // Use built file from app2's dist folder via app2's dev server
-      console.log('Loading app2 script...');
-      await loadScript('http://localhost:9002/dist/app2.iife.js');
-      console.log('Script loaded, checking window.app2...');
-      // Wait a bit for IIFE to execute
-      await new Promise(resolve => setTimeout(resolve, 100));
-      return getAppFromWindow('app2');
+      // In development, use dynamic import from dev server
+      console.log('Loading app2 in DEV mode...');
+      const module = await dynamicImport('http://localhost:9002/src/main.ts');
+      console.log('app2 module loaded:', module);
+      return module;
     } else {
-      await loadScript('http://localhost:9002/app2.iife.js');
-      await new Promise(resolve => setTimeout(resolve, 100));
-      return getAppFromWindow('app2');
+      // In production, use SystemJS with import maps
+      if (typeof (window as any).System === 'undefined') {
+        throw new Error('SystemJS is not loaded. Please ensure SystemJS is included before root-config.');
+      }
+      
+      console.log('Loading app2 via SystemJS...');
+      const System = (window as any).System;
+      const app = await System.import('@app2/app');
+      console.log('app2 loaded via SystemJS:', app);
+      return app.default || app;
     }
   },
   activeWhen: (location) => location.hash.startsWith('#/app2'),

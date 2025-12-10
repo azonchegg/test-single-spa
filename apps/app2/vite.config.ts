@@ -1,32 +1,32 @@
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
 
 export default defineConfig({
-  plugins: [
-    vue()
-  ],
+  plugins: [vue()],
+  
+  define: {
+    'process.env': '{}',
+    'process.env.NODE_ENV': '"production"',
+  },
+
+  server: {
+    port: 9002,
+    cors: true,
+  },
+
   build: {
     lib: {
       entry: './src/main.ts',
       name: 'app2',
       fileName: 'app2',
-      formats: ['iife'],
+      formats: ['system'],
     },
     rollupOptions: {
       output: {
         inlineDynamicImports: true,
-        // Use default export only
-        exports: 'default',
       },
-      // Don't externalize Vue and single-spa-vue - include them in the bundle
-      external: [],
+      // Externalize shared dependencies that will be provided by import maps
+      external: ['vue', 'single-spa-vue'],
     },
   },
-  server: {
-    port: 9002,
-    cors: true,
-  },
 });
-

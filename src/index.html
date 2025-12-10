@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--  <link rel="stylesheet" href="http://localhost:9002/dist/style.css">-->
   <title>Test Single SPA</title>
   <style>
     body {
@@ -48,6 +49,22 @@
     <div id="navigation"></div>
   </div>
   <div id="single-spa-application"></div>
+  
+  <!-- SystemJS loader -->
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.12.1/dist/system.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.12.1/dist/extras/amd.min.js"></script>
+  
+  <!-- Import Maps -->
+  <script type="systemjs-importmap">
+    {
+      "imports": {
+        "vue": "https://cdn.jsdelivr.net/npm/vue@3/dist/vue.esm-browser.js",
+        "single-spa-vue": "https://cdn.jsdelivr.net/npm/single-spa-vue@3/dist/esm/single-spa-vue.js",
+        "@app2/app": "http://localhost:9002/dist/app2.js"
+      }
+    }
+  </script>
+  
   <script type="module" src="/root-config.ts"></script>
 </body>
 </html>
