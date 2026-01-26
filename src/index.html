@@ -1,54 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Test Single SPA</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>single-spa root</title>
+
+  <!-- SystemJS loader -->
+  <script src="https://cdn.jsdelivr.net/npm/systemjs/dist/system.min.js"></script>
+
+  <!-- Import map: здесь “вставляется” ваш entry (через URL) -->
+  <script type="systemjs-importmap">
+    {
+      "imports": {
+        "@org/root-config": "http://localhost:9000/dist/root-config.js",
+        "@org/my-mfe": "http://localhost:8080/dist/spa.js",
+        "single-spa": "https://cdn.jsdelivr.net/npm/single-spa/lib/system/single-spa.min.js"
+      }
     }
-    #header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 1rem 2rem;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    #header h1 {
-      margin: 0;
-      font-size: 1.5rem;
-    }
-    #navigation {
-      display: flex;
-      gap: 1rem;
-      margin-top: 0.5rem;
-    }
-    #navigation a {
-      color: white;
-      text-decoration: none;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      transition: background-color 0.2s;
-    }
-    #navigation a:hover {
-      background-color: rgba(255, 255, 255, 0.2);
-    }
-    #navigation a.active {
-      background-color: rgba(255, 255, 255, 0.3);
-    }
-    #single-spa-application {
-      padding: 2rem;
-    }
-  </style>
+  </script>
 </head>
+
 <body>
-  <div id="header">
-    <h1>Test Single SPA</h1>
-    <div id="navigation"></div>
-  </div>
-  <div id="single-spa-application"></div>
-  <script type="module" src="/root-config.ts"></script>
+<!-- Контейнер(ы) под ваши приложения -->
+<div id="single-spa-application:@org/my-mfe"></div>
+
+<!-- Стартуем root-config -->
+<script>
+  System.import("@org/root-config");
+</script>
 </body>
 </html>
-
