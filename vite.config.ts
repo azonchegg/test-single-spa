@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import fs from "node:fs";
 
 export default defineConfig({
   root: './src',
@@ -19,7 +20,12 @@ export default defineConfig({
   },
   server: {
     port: 9000,
-    cors: true
+    host: 'localhost',
+    cors: true,
+    https: {
+      key: fs.readFileSync('./certs/localhost-key.pem'),
+      cert: fs.readFileSync('./certs/localhost.pem')
+    }
   },
 });
 
