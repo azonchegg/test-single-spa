@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Single-SPA root application with Vue 3 micro-frontends",
   "scripts": {
-    "start": "vite",
+    "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },

@@ -1,5 +1,4 @@
 import { defineConfig } from 'vite';
-import { resolve } from 'path';
 import fs from "node:fs";
 
 export default defineConfig({
@@ -9,9 +8,11 @@ export default defineConfig({
     emptyOutDir: true,
     sourcemap: true,
     rollupOptions: {
-      input: "src/root-config.ts",
-      external: ["single-spa"],
-      preserveEntrySignatures: "allow-extension",
+      input: {
+        "root-config": "src/root-config.ts",
+        "single-spa.min": "src/single-spa.min.js",
+        "system.min.js": "src/system.min.js",
+      },
       output: {
         format: "system",
         entryFileNames: "root-config.js",

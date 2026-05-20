@@ -6,15 +6,15 @@
   <title>single-spa root</title>
 
   <!-- SystemJS loader -->
-  <script src="https://cdn.jsdelivr.net/npm/systemjs/dist/system.min.js"></script>
+  <script src="/system.min.js"></script>
 
   <!-- Import map: здесь “вставляется” ваш entry (через URL) -->
   <script type="systemjs-importmap">
     {
       "imports": {
-        "@org/root-config": "https://localhost:9000/dist/root-config.js",
+        "@org/root-config": "/dist/root-config.js",
         "@org/my-mfe": "https://localhost:8080/spa.js",
-        "single-spa": "https://cdn.jsdelivr.net/npm/single-spa/lib/system/single-spa.min.js"
+        "single-spa": "/single-spa.min.js"
       }
     }
   </script>
